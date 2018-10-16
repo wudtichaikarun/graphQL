@@ -4,19 +4,19 @@
       "id": "23",
       "firstName": "romantic",
       "age": 20,
-      "CompanyId": "1"
+      "companyId": "1"
     },
     {
       "id": "21",
       "firstName": "wudtichai",
       "age": 29,
-      "CompanyId": "2"
+      "companyId": "2"
     },
     {
       "id": "22",
       "firstName": "yotsanan",
       "age": 29,
-      "CompanyId": "2"
+      "companyId": "2"
     }
   ],
   "companies": [
