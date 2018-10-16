@@ -5,11 +5,14 @@ const {
   GraphQLInt,
   GraphQLString,
   GraphQLSchema,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = graphql;
 
 const CompanyType = new GraphQLObjectType({
   name: 'Company',
+  // use arrow function to resolving circular references
+  // because UserType not defind now
   fields: () => ({
     id: { type: GraphQLString },
     name: { type: GraphQLString },
@@ -74,6 +77,30 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        firstName: {
+          type: new GraphQLNonNull(GraphQLString)
+        },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
+        companyId: { type: GraphQLString }
+      },
+      resolve(parentValue, { firstName, age }) {
+        return axios
+          .post('http://localhost:3000/users/', {
+            firstName,
+            age
+          })
+          .then(resp => resp.data);
+      }
+    }
+  }
+});
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 });
